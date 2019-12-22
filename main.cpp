@@ -4,9 +4,17 @@
 
 #include "parsing/device.hpp"
 
-int main() {
+int main(int argc, char** argv) {
     pugi::xml_document doc;
-    pugi::xml_parse_result result = doc.load_file("../definitions/ATSAM3X8E.svd");
+    
+    if (argc < 2) {
+        std::cerr << "Not enough arguments, Usage:" << std::endl 
+                  << "ChipEmit chip.svd" << std::endl;
+
+        return -1;
+    }
+
+    pugi::xml_parse_result result = doc.load_file(argv[1]);
 
     if (!result) {
         std::cerr << "Could not load XML file." << std::endl;
